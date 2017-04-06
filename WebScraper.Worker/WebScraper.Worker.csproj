@@ -7,7 +7,7 @@
     <ProjectGuid>{ED3C3E1A-5A11-4A2B-896F-453B88B14678}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>codefrom.WebScraper.Worker</RootNamespace>
+    <RootNamespace>CodeFrom.WebScraper.Worker</RootNamespace>
     <AssemblyName>WebScraper.Worker</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,8 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Interfaces\TaskElements\IAggregator.cs" />
+    <Compile Include="Interfaces\TaskElements\IConsumer.cs" />
+    <Compile Include="Interfaces\TaskElements\IExtractor.cs" />
+    <Compile Include="Interfaces\ITask.cs" />
+    <Compile Include="Interfaces\TaskElements\IProvider.cs" />
+    <Compile Include="Interfaces\TaskElements\ISplitter.cs" />
+    <Compile Include="Interfaces\TaskElements\ITaskElement.cs" />
+    <Compile Include="Interfaces\TaskElements\ITransformer.cs" />
+    <Compile Include="Interfaces\IWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebScraper.Common\WebScraper.Common.csproj">
+      <Project>{00e40e1d-18ab-45c2-bebf-c311d4bd3339}</Project>
+      <Name>WebScraper.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

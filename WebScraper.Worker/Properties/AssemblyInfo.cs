@@ -1,5 +1,11 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿//-----------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="CodeFrom">
+//     Copyright (c) CodeFrom. All rights reserved.
+//     https://github.com/codefrom/
+// </copyright>
+// <author>Rateev Ilya</author>
+//-----------------------------------------------------------------------
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
