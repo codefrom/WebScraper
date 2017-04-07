@@ -6,6 +6,7 @@
     using CodeFrom.WebScraper.Common;
     using CodeFrom.WebScraper.Worker.Implementations;
     using CodeFrom.WebScraper.Worker.Interfaces.TaskElements;
+    using System.IO;
 
     public class DummyProvider : IProvider<DummyPayload>
     {
@@ -71,17 +72,23 @@
             Console.WriteLine("Got value : " + dpl?.Value);
         }
     }
+
+    public class DummyHtmlPrinter : IConsumer
+    {
+        public void Consume(IPayload payload)
+        {
+            var html = payload as HtmlPayload;
+            Console.WriteLine(new StreamReader(html?.Content).ReadToEnd());
+        }
+    }
     public class Program
     {
         public static void Main(string[] args)
         {
-            TaskParallelProcessor a = new TaskParallelProcessor();
+            TaskParallelProcessor a = new TaskParallelProcessor() { DegreeOfParallelism = 10 };
             var l = new List<ITaskElement>();
-            l.Add(new DummyProvider());
-            l.Add(new DummySplittor());
-            l.Add(new DummyTransformer()); 
-            l.Add(new DummyAggregator());
-            l.Add(new DummyConsumer());
+            l.Add(new SimpleHtmlProvider() { Address = "https://www.google.com" });
+            l.Add(new DummyHtmlPrinter());
             a.TaskElements = l;
             a.DoTask();
         }

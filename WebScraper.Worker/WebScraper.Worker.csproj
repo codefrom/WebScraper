@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\HtmlPayload.cs" />
+    <Compile Include="Implementations\SimpleHtmlProvider.cs" />
     <Compile Include="Implementations\TaskParallelProcessor.cs" />
     <Compile Include="Interfaces\TaskElements\IAggregator.cs" />
     <Compile Include="Interfaces\TaskElements\IConsumer.cs" />
