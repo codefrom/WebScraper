@@ -13,16 +13,14 @@ namespace CodeFrom.WebScraper.Worker.Interfaces.TaskElements
     /// Interface for transformer task element
     /// </summary>
     /// <typeparam name="T">Type of payload that will be returned by this element</typeparam>
-    /// <typeparam name="K">Type of payload that element work with </typeparam>
-    public interface ITransformer<T, K> : ITaskElement
+    public interface ITransformer<out T> : ITaskElement
         where T : IPayload
-        where K : IPayload
     {
         /// <summary>
         /// Transforms payload from another payload
         /// </summary>
         /// <param name="payload">Payload of type <typeparamref name="K"/> that will be processed</param>
         /// <returns>One object of type <typeparamref name="T"/></returns>
-        T Transform(K payload);
+        T Transform(IPayload payload);
     }
 }

@@ -14,7 +14,7 @@ namespace CodeFrom.WebScraper.Worker.Interfaces.TaskElements
     /// Interface for provider. It's main function is to get some payload/payloads for processing (how ever it pleases).
     /// </summary>
     /// <typeparam name="T">Type of payload that will be returned by this element</typeparam>
-    public interface IProvider<T> : ITaskElement
+    public interface IProvider<out T> : ITaskElement
         where T : IPayload
     {
         /// <summary>
