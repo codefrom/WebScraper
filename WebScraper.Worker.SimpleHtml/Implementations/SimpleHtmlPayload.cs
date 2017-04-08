@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="HtmlPayload.cs" company="CodeFrom">
+// <copyright file="SimpleHtmlPayload.cs" company="CodeFrom">
 //     Copyright (c) CodeFrom. All rights reserved.
 //     https://github.com/codefrom/
 // </copyright>
@@ -7,17 +7,17 @@
 //-----------------------------------------------------------------------
 namespace CodeFrom.WebScraper.Worker.Implementations
 {
-    using System.IO;
     using Common;
+    using CsQuery;
 
     /// <summary>
     /// Html payload implementation
     /// </summary>
-    public class HtmlPayload : IHtmlPayload
+    public class SimpleHtmlPayload : IHtmlPayload
     {
         /// <summary>
         /// Gets or sets html content
         /// </summary>
-        public Stream Content { get; set; }
+        public CQ Content { get; set; }
     }
 }

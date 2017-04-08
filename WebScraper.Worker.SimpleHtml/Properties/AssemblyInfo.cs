@@ -1,22 +1,16 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="CodeFrom">
-//     Copyright (c) CodeFrom. All rights reserved.
-//     https://github.com/codefrom/
-// </copyright>
-// <author>Rateev Ilya</author>
-//-----------------------------------------------------------------------
-using System.Reflection;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WebScraper.HtmlProvider")]
+[assembly: AssemblyTitle("WebScraper.Worker.SimpleHtml")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CINIMEX")]
-[assembly: AssemblyProduct("WebScraper.HtmlProvider")]
-[assembly: AssemblyCopyright("Copyright © CINIMEX 2017")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("WebScraper.Worker.SimpleHtml")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -26,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("11683079-c041-40f8-99a1-2774ae4742a7")]
+[assembly: Guid("c5118879-c058-4bf1-8e1e-663c40dbc07d")]
 
 // Version information for an assembly consists of the following four values:
 //

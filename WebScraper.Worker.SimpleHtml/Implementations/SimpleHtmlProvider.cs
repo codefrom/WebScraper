@@ -8,13 +8,13 @@
 namespace CodeFrom.WebScraper.Worker.Implementations
 {
     using System.Collections.Generic;
-    using System.Net;
     using Interfaces.TaskElements;
-    
+    using CsQuery;
+
     /// <summary>
     /// Simple http provider
     /// </summary>
-    public class SimpleHtmlProvider : IProvider<HtmlPayload>
+    public class SimpleHtmlProvider : IProvider<SimpleHtmlPayload>
     {
         /// <summary>
         /// Gets or sets address to be loaded
@@ -25,16 +25,13 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// Provide payload from link
         /// </summary>
         /// <returns>Returns payload of loaded page</returns>
-        public IEnumerable<HtmlPayload> Provide()
+        public IEnumerable<SimpleHtmlPayload> Provide()
         {
-            return new List<HtmlPayload>()
+            return new List<SimpleHtmlPayload>()
             {
-                new HtmlPayload()
+                new SimpleHtmlPayload()
                 {
-                    Content = 
-                        WebRequest.Create(this.Address)
-                            .GetResponse()
-                            .GetResponseStream()
+                    Content = CQ.CreateFromUrl(this.Address)
                 }
             };
         }

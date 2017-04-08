@@ -54,6 +54,10 @@
       <Project>{00e40e1d-18ab-45c2-bebf-c311d4bd3339}</Project>
       <Name>WebScraper.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebScraper.Worker.SimpleHtml\WebScraper.Worker.SimpleHtml.csproj">
+      <Project>{c5118879-c058-4bf1-8e1e-663c40dbc07d}</Project>
+      <Name>WebScraper.Worker.SimpleHtml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebScraper.Worker\WebScraper.Worker.csproj">
       <Project>{ed3c3e1a-5a11-4a2b-896f-453b88b14678}</Project>
       <Name>WebScraper.Worker</Name>
