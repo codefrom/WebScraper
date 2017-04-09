@@ -38,14 +38,6 @@
       <HintPath>..\packages\NLog.4.4.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="StyleCop, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
-      <HintPath>..\packages\StyleCop.4.7.55\lib\net35\StyleCop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StyleCop.CSharp, Version=4.7.1000.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
-      <HintPath>..\packages\StyleCop.4.7.55\lib\net35\StyleCop.CSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,13 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\SimpleHtmlToVirtualObjectTransformer.cs" />
-    <Compile Include="Implementations\SimpleHtmlPayload.cs" />
-    <Compile Include="Implementations\SimpleHtmlToDatabaseConsumer.cs" />
-    <Compile Include="Implementations\SimpleVirtualObjectToFileConsumer.cs" />
-    <Compile Include="Implementations\SimpleHtmlToFileConsumer.cs" />
-    <Compile Include="Implementations\SimpleHtmlExtractor.cs" />
-    <Compile Include="Implementations\SimpleHtmlProvider.cs" />
+    <Compile Include="Implementations\HtmlToVirtualObjectTransformer.cs" />
+    <Compile Include="Implementations\HtmlPayload.cs" />
+    <Compile Include="Implementations\VirtualObjectToFileConsumer.cs" />
+    <Compile Include="Implementations\Extractor.cs" />
+    <Compile Include="Implementations\Provider.cs" />
     <Compile Include="Implementations\VirtualObjectPayload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

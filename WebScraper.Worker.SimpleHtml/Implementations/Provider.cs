@@ -5,7 +5,7 @@
 // </copyright>
 // <author>Rateev Ilya</author>
 //-----------------------------------------------------------------------
-namespace CodeFrom.WebScraper.Worker.Implementations
+namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
 {
     using System.Collections.Generic;
     using Interfaces.TaskElements;
@@ -14,7 +14,7 @@ namespace CodeFrom.WebScraper.Worker.Implementations
     /// <summary>
     /// Simple http provider
     /// </summary>
-    public class SimpleHtmlProvider : IProvider<SimpleHtmlPayload>
+    public class Provider : IProvider<HtmlPayload>
     {
         /// <summary>
         /// Gets or sets address to be loaded
@@ -25,11 +25,11 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// Provide payload from link
         /// </summary>
         /// <returns>Returns payload of loaded page</returns>
-        public IEnumerable<SimpleHtmlPayload> Provide()
+        public IEnumerable<HtmlPayload> Provide()
         {
-            return new List<SimpleHtmlPayload>()
+            return new List<HtmlPayload>()
             {
-                new SimpleHtmlPayload()
+                new HtmlPayload()
                 {
                     Content = CQ.CreateFromUrl(this.Address)
                 }

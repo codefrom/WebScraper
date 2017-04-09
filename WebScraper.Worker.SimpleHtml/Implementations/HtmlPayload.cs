@@ -5,7 +5,7 @@
 // </copyright>
 // <author>Rateev Ilya</author>
 //-----------------------------------------------------------------------
-namespace CodeFrom.WebScraper.Worker.Implementations
+namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
 {
     using Common;
     using CsQuery;
@@ -13,7 +13,7 @@ namespace CodeFrom.WebScraper.Worker.Implementations
     /// <summary>
     /// Html payload implementation
     /// </summary>
-    public class SimpleHtmlPayload : IHtmlPayload
+    public class HtmlPayload : IHtmlPayload
     {
         /// <summary>
         /// Gets or sets html content

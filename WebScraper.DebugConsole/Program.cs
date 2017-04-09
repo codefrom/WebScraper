@@ -14,15 +14,15 @@
         {
             TaskParallelProcessor a = new TaskParallelProcessor() { DegreeOfParallelism = 10 };
             var l = new List<ITaskElement>();
-            l.Add(new SimpleHtmlProvider() { Address = "https://bitskins.com" });
-            l.Add(new SimpleHtmlExtractor() { CssSelector = "div.item-solo" });
-            l.Add(new SimpleHtmlToVirtualObjectTransformer() { Mapping = new Dictionary<string, SimpleHtmlToVirtualObjectTransformer.Selector>()
+            l.Add(new Provider() { Address = "https://bitskins.com" });
+            l.Add(new Extractor() { CssSelector = "div.item-solo" });
+            l.Add(new HtmlToVirtualObjectTransformer() { Mapping = new Dictionary<string, HtmlToVirtualObjectTransformer.Selector>()
             {
-                { "price" , new SimpleHtmlToVirtualObjectTransformer.Selector(css: "span.item-price") },
-                { "name" , new SimpleHtmlToVirtualObjectTransformer.Selector(css: "div.item-title") }
+                { "price" , new HtmlToVirtualObjectTransformer.Selector(css: "span.item-price") },
+                { "name" , new HtmlToVirtualObjectTransformer.Selector(css: "div.item-title") }
             }
             });
-            l.Add(new SimpleVirtualObjectToFileConsumer() { FilePath = "test.out.txt" });
+            l.Add(new VirtualObjectToFileConsumer() { FilePath = "test.out.txt" });
             a.TaskElements = l;
             a.DoTask();
         }
