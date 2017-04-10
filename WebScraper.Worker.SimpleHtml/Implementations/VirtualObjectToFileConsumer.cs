@@ -31,7 +31,7 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
             var vo = payload as VirtualObjectPayload;
             if (vo != null)
             {
-                using (var sw = File.AppendText(FilePath))
+                using (var sw = File.AppendText(this.FilePath))
                 {
                     sw.Write(vo);
                 }

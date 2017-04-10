@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SimpleHtmlPayload.cs" company="CodeFrom">
+// <copyright file="HtmlPayload.cs" company="CodeFrom">
 //     Copyright (c) CodeFrom. All rights reserved.
 //     https://github.com/codefrom/
 // </copyright>

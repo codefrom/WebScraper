@@ -13,12 +13,12 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     using Interfaces.TaskElements;
 
     /// <summary>
-    /// Extracts data from html, using css selector
+    /// Extracts data from html, using CSS selector
     /// </summary>
     public class Extractor : IExtractor<HtmlPayload>
     {
         /// <summary>
-        /// Gets or sets css selector string
+        /// Gets or sets CSS selector string
         /// </summary>
         public string CssSelector { get; set; }
 
@@ -31,10 +31,11 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         {
             var html = payload as HtmlPayload;
             var elements = new List<HtmlPayload>();
-            foreach (var element in html.Content[CssSelector])
+            foreach (var element in html.Content[this.CssSelector])
             {
-                elements.Add(new HtmlPayload() { Content = new CQ(element) } );
+                elements.Add(new HtmlPayload() { Content = new CQ(element) });
             }
+
             return elements;
         }
     }

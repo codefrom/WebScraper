@@ -7,9 +7,9 @@
 //-----------------------------------------------------------------------
 namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
 {
-    using Common;
     using System.Collections.Generic;
     using System.Text;
+    using Common;
 
     /// <summary>
     /// Class that implements simple name-value for mapping purposes
@@ -17,9 +17,9 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     public class VirtualObjectPayload : IPayload
     {
         /// <summary>
-        /// Seporator of class names and fields in string
+        /// Separator of class names and fields in string
         /// </summary>
-        private const char ObjectsSeporator = '.';
+        private const char ObjectsSeparator = '.';
 
         /// <summary>
         /// Dictionary of simple values
@@ -38,18 +38,19 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         /// <param name="value">Value to set</param>
         public void SetProperty(string name, string value)
         {
-            if (name.Contains(ObjectsSeporator.ToString()))
+            if (name.Contains(ObjectsSeparator.ToString()))
             {
-                var split = name.Split(new char[] { ObjectsSeporator }, 2);
-                if (!references.ContainsKey(split[0]))
+                var split = name.Split(new char[] { ObjectsSeparator }, 2);
+                if (!this.references.ContainsKey(split[0]))
                 {
-                    references[split[0]] = new VirtualObjectPayload();
+                    this.references[split[0]] = new VirtualObjectPayload();
                 }
-                references[split[0]].SetProperty(split[1], value);
+
+                this.references[split[0]].SetProperty(split[1], value);
             }
             else
             {
-                values[name] = value;
+                this.values[name] = value;
             }
         }
 
@@ -60,22 +61,24 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         /// <returns>Returns property value, if not exists then empty</returns>
         public string GetProperty(string name)
         {
-            if (name.Contains(ObjectsSeporator.ToString()))
+            if (name.Contains(ObjectsSeparator.ToString()))
             {
-                var split = name.Split(new char[] { ObjectsSeporator }, 2);
-                if (!references.ContainsKey(split[0]))
+                var split = name.Split(new char[] { ObjectsSeparator }, 2);
+                if (!this.references.ContainsKey(split[0]))
                 {
-                    references[split[0]] = new VirtualObjectPayload();
+                    this.references[split[0]] = new VirtualObjectPayload();
                 }
-                return references[split[0]].GetProperty(split[1]);
+
+                return this.references[split[0]].GetProperty(split[1]);
             }
             else
             {
-                if (!values.ContainsKey(name))
+                if (!this.values.ContainsKey(name))
                 {
                     return string.Empty;
                 }
-                return values[name];
+
+                return this.values[name];
             }
         }
 
@@ -87,14 +90,16 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         {
             var sb = new StringBuilder();
             sb.AppendLine("{");
-            foreach (var value in values)
+            foreach (var value in this.values)
             {
                 sb.AppendLine($"{value.Key}={value.Value}");
             }
-            foreach (var reference in references)
+
+            foreach (var reference in this.references)
             {
                 sb.AppendLine($"{reference.Key}={reference.Value.ToString()}");
             }
+
             sb.AppendLine("}");
             return sb.ToString();
         }

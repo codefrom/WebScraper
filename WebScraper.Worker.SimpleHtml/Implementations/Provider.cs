@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SimpleHtmlProvider.cs" company="CodeFrom">
+// <copyright file="Provider.cs" company="CodeFrom">
 //     Copyright (c) CodeFrom. All rights reserved.
 //     https://github.com/codefrom/
 // </copyright>
@@ -8,8 +8,8 @@
 namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
 {
     using System.Collections.Generic;
-    using Interfaces.TaskElements;
     using CsQuery;
+    using Interfaces.TaskElements;
 
     /// <summary>
     /// Simple http provider

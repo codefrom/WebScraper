@@ -1,9 +1,6 @@
 ﻿namespace WebScraper.DebugConsole
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using CodeFrom.WebScraper.Common;
     using CodeFrom.WebScraper.Worker.Implementations;
     using CodeFrom.WebScraper.Worker.Interfaces.TaskElements;
     using CodeFrom.WebScraper.Worker.SimpleHtml.Implementations;
@@ -14,12 +11,13 @@
         {
             TaskParallelProcessor a = new TaskParallelProcessor() { DegreeOfParallelism = 10 };
             var l = new List<ITaskElement>();
-            l.Add(new Provider() { Address = "https://bitskins.com" });
-            l.Add(new Extractor() { CssSelector = "div.item-solo" });
+            l.Add(new Provider() { Address = "https://google.com/?q=WebScraper" });
+            l.Add(new Extractor() { CssSelector = "h3.r" });
             l.Add(new HtmlToVirtualObjectTransformer() { Mapping = new Dictionary<string, HtmlToVirtualObjectTransformer.Selector>()
             {
-                { "price" , new HtmlToVirtualObjectTransformer.Selector(css: "span.item-price") },
-                { "name" , new HtmlToVirtualObjectTransformer.Selector(css: "div.item-title") }
+                { "text" , new HtmlToVirtualObjectTransformer.Selector(css: "a") },
+                { "href" , new HtmlToVirtualObjectTransformer.Selector(css: "a", attribute: "href") },
+                { "target" , new HtmlToVirtualObjectTransformer.Selector(css: "a", attribute: "target") }
             }
             });
             l.Add(new VirtualObjectToFileConsumer() { FilePath = "test.out.txt" });
