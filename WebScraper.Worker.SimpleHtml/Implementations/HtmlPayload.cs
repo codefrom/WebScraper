@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------
 namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
 {
+    using System;
     using Common;
     using CsQuery;
 
@@ -15,6 +16,11 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     /// </summary>
     public class HtmlPayload : IHtmlPayload
     {
+        /// <summary>
+        /// Gets or sets url at which page is located
+        /// </summary>
+        public Uri Address { get; set; }
+
         /// <summary>
         /// Gets or sets html content
         /// </summary>

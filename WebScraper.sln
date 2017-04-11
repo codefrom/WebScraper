@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraper.DebugConsole", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraper.Worker.SimpleHtml", "WebScraper.Worker.SimpleHtml\WebScraper.Worker.SimpleHtml.csproj", "{C5118879-C058-4BF1-8E1E-663C40DBC07D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScraper.Worker.Akka", "WebScraper.Worker.Akka\WebScraper.Worker.Akka.csproj", "{7733BC11-1B3F-4F02-A62B-57ADC8806218}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C5118879-C058-4BF1-8E1E-663C40DBC07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5118879-C058-4BF1-8E1E-663C40DBC07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5118879-C058-4BF1-8E1E-663C40DBC07D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7733BC11-1B3F-4F02-A62B-57ADC8806218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7733BC11-1B3F-4F02-A62B-57ADC8806218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7733BC11-1B3F-4F02-A62B-57ADC8806218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7733BC11-1B3F-4F02-A62B-57ADC8806218}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

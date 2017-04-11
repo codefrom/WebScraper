@@ -54,6 +54,10 @@
       <Project>{00e40e1d-18ab-45c2-bebf-c311d4bd3339}</Project>
       <Name>WebScraper.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebScraper.Worker.Akka\WebScraper.Worker.Akka.csproj">
+      <Project>{7733bc11-1b3f-4f02-a62b-57adc8806218}</Project>
+      <Name>WebScraper.Worker.Akka</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebScraper.Worker.SimpleHtml\WebScraper.Worker.SimpleHtml.csproj">
       <Project>{c5118879-c058-4bf1-8e1e-663c40dbc07d}</Project>
       <Name>WebScraper.Worker.SimpleHtml</Name>
@@ -62,6 +66,9 @@
       <Project>{ed3c3e1a-5a11-4a2b-896f-453b88b14678}</Project>
       <Name>WebScraper.Worker</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

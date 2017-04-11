@@ -12,12 +12,18 @@ namespace CodeFrom.WebScraper.Worker.Implementations
     using Common;
     using Interfaces;
     using Interfaces.TaskElements;
+    using NLog;
 
     /// <summary>
     /// Simple task parallel executor
     /// </summary>
     public class TaskParallelProcessor : ITask
     {
+        /// <summary>
+        /// Logger for this class
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets or sets TaskElements that will be executed in this task
         /// </summary>
@@ -33,25 +39,33 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// </summary>
         public void DoTask()
         {
+            logger.Debug($"Starting task execution");
             IEnumerable<IPayload> payloads = null;
             foreach (var taskElement in this.TaskElements)
             {
+                logger.Debug($"Processing {taskElement.GetType()}");
                 dynamic dynTaskElement = taskElement;
-                payloads = this.Materialize(this.Execute(dynTaskElement, payloads));
+                payloads = this.Execute(dynTaskElement, payloads);
+                logger.Debug($"Processed {taskElement.GetType()}");
             }
+
+            logger.Debug($"Finished task execution");
         }
 
         /// <summary>
-        /// Materializes enumeration to next execution step
+        /// Prepares enumeration for parallel execution
         /// </summary>
-        /// <param name="payloads">Enumeration of payloads to be materialized</param>
-        /// <returns>Materialized enumeration (list)</returns>
-        private IEnumerable<IPayload> Materialize(IEnumerable<IPayload> payloads)
+        /// <param name="payloads">Enumeration of payloads to be parallel</param>
+        /// <returns>Prepared enumeration</returns>
+        private ParallelQuery<IPayload> AsParallel(IEnumerable<IPayload> payloads)
         {
-            return payloads
-                .AsParallel()
-                .WithDegreeOfParallelism(this.DegreeOfParallelism > 0 ? this.DegreeOfParallelism : 1)
-                .ToList();
+            var parallel = payloads.AsParallel();
+            if (this.DegreeOfParallelism > 0)
+            {
+                parallel = parallel.WithDegreeOfParallelism(this.DegreeOfParallelism);
+            }
+
+            return parallel;
         }
 
         /// <summary>
@@ -62,15 +76,8 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(ISplitter<IPayload> element, IEnumerable<IPayload> payloads)
         {
-            foreach (var payload in payloads)
-            {
-                foreach (var ret in element.Split(payload))
-                {
-                    yield return ret;
-                }
-            }
-
-            yield break;
+            logger.Debug($"Executing for ISplitter element");
+            return this.AsParallel(payloads).SelectMany(payload => element.Split(payload));
         }
 
         /// <summary>
@@ -81,7 +88,10 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(IAggregator<IPayload> element, IEnumerable<IPayload> payloads)
         {
+            logger.Debug($"Executing for IAggregator element");
             yield return element.Aggregate(payloads);
+            logger.Debug($"Executing for IAggregator element finished");
+            yield break;
         }
 
         /// <summary>
@@ -92,12 +102,10 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(IConsumer element, IEnumerable<IPayload> payloads)
         {
-            foreach (var payload in payloads)
-            {
-                element.Consume(payload);
-            }
-
-            yield break;
+            logger.Debug($"Executing for IConsumer element");
+            this.AsParallel(payloads).ForAll(payload => element.Consume(payload));
+            logger.Debug($"Executing for IConsumer element finished");
+            return payloads;
         }
 
         /// <summary>
@@ -108,10 +116,8 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(IProvider<IPayload> element, IEnumerable<IPayload> payloads)
         {
-            foreach (var ret in element.Provide())
-            {
-                yield return ret;
-            }
+            logger.Debug($"Executing for IProvider element");
+            return element.Provide();
         }
 
         /// <summary>
@@ -122,12 +128,8 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(ITransformer<IPayload> element, IEnumerable<IPayload> payloads)
         {
-            foreach (var payload in payloads)
-            {
-                yield return element.Transform(payload);
-            }
-
-            yield break;
+            logger.Debug($"Executing for ITransformer element");
+            return this.AsParallel(payloads).Select(payload => element.Transform(payload));
         }
 
         /// <summary>
@@ -138,15 +140,11 @@ namespace CodeFrom.WebScraper.Worker.Implementations
         /// <returns>Resulting enumeration of payloads (may be one, empty or many)</returns>
         private IEnumerable<IPayload> Execute(IExtractor<IPayload> element, IEnumerable<IPayload> payloads)
         {
-            foreach (var payload in payloads)
+            logger.Debug($"Executing for IExtractor element");
+            foreach (var result in this.AsParallel(payloads).SelectMany(payload => element.ExtractFrom(payload)))
             {
-                foreach (var ret in element.ExtractFrom(payload))
-                {
-                    yield return ret;
-                }
+                yield return result;
             }
-
-            yield break;
         }
     }
 }

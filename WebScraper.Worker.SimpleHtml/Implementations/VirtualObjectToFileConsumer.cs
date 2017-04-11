@@ -11,12 +11,18 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     using System.IO;
     using Common;
     using Interfaces.TaskElements;
+    using NLog;
 
     /// <summary>
     /// Consumes VirtualObject to file
     /// </summary>
     public class VirtualObjectToFileConsumer : IConsumer
     {
+        /// <summary>
+        /// Logger for this class
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets or sets path to file payload to be written in
         /// </summary>
@@ -28,6 +34,8 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         /// <param name="payload">Payload to be consumed</param>
         public void Consume(IPayload payload)
         {
+            logger.Debug($"Consuming payload");
+            logger.Trace($"Payload : {payload}");
             var vo = payload as VirtualObjectPayload;
             if (vo != null)
             {
@@ -38,8 +46,11 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
             }
             else
             {
+                logger.Error($"Got wrong payload type : {payload.GetType()}, expecting HtmlPayload");
                 throw new ArgumentNullException("payload");
             }
+
+            logger.Debug($"Consumed payload to file");
         }
     }
 }

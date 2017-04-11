@@ -12,6 +12,7 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     using Common;
     using CsQuery;
     using Interfaces.TaskElements;
+    using NLog;
 
     /// <summary>
     /// Class for transformation from html to virtual object
@@ -19,11 +20,16 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     public class HtmlToVirtualObjectTransformer : ITransformer<VirtualObjectPayload>
     {
         /// <summary>
+        /// Logger for this class
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
         /// Gets or sets dictionary to be used for mapping
         ///   keys - field names in VirtualObject
         ///   values - selector to be applied to payload
         /// </summary>
-        public Dictionary<string, Selector> Mapping { get; set; }
+        public Dictionary<string, ValueSelector> Mapping { get; set; }
 
         /// <summary>
         /// Transforms payload from HtmlPayload to VirtualObjectPayload
@@ -32,86 +38,23 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         /// <returns>Returns object of type VirtualObjectPayload</returns>
         public VirtualObjectPayload Transform(IPayload payload)
         {
+            logger.Debug($"Start transforming payload");
+            logger.Trace($"Payload : {payload}");
             var html = payload as HtmlPayload;
             if (html == null)
             {
+                logger.Error($"Got wrong payload type : {payload.GetType()}, expecting HtmlPayload");
                 throw new ArgumentNullException("payload");
             }
 
             var res = new VirtualObjectPayload();
             foreach (var map in this.Mapping)
             {
-                res.SetProperty(map.Key, map.Value.ApplyTo(html.Content));
+                res.SetProperty(map.Key, map.Value.Select(html.Content));
             }
 
+            logger.Debug($"Transformed payload");
             return res;
-        }
-
-        /// <summary>
-        /// Class represents selector for mapping
-        /// </summary>
-        public class Selector
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Selector" /> class with default parameters
-            /// </summary>
-            public Selector()
-            {
-                this.CssSelector = null;
-                this.GetAttribute = null;
-                this.GetText = true;
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Selector" /> class with named parameters
-            /// </summary>
-            /// <param name="css">Value of <seealso cref="CssSelector"/>, default is empty</param>
-            /// <param name="attribute">Value of GetAttribute, default is empty</param>
-            /// <param name="getText">Value of GetText, default is true</param>
-            public Selector(string css = "", string attribute = "", bool getText = true)
-            {
-                this.CssSelector = css;
-                this.GetAttribute = attribute;
-                this.GetText = string.IsNullOrEmpty(attribute);
-            }
-
-            /// <summary>
-            /// Gets or sets CSS selector to use before get value
-            /// </summary>
-            public string CssSelector { get; set; }
-
-            /// <summary>
-            /// Gets or sets attribute name value of which to get
-            /// </summary>
-            public string GetAttribute { get; set; }
-
-            /// <summary>
-            /// Gets or sets a value indicating whether to get text from element (not attribute)
-            /// </summary>
-            public bool GetText { get; set; }
-
-            /// <summary>
-            /// Applies current selector to html, to get resulting string value
-            /// </summary>
-            /// <param name="inputContent">Input html to be processed</param>
-            /// <returns>String value of selected attribute or element</returns>
-            public string ApplyTo(CQ inputContent)
-            {
-                var content = inputContent;
-                if (!string.IsNullOrEmpty(this.CssSelector))
-                {
-                    content = content.Find(this.CssSelector);
-                }
-
-                if (this.GetText)
-                {
-                    return content.Text();
-                }
-                else
-                {
-                    return content.Attr(this.GetAttribute);
-                }
-            }
         }
     }
 }

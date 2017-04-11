@@ -11,12 +11,18 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
     using Common;
     using CsQuery;
     using Interfaces.TaskElements;
+    using NLog;
 
     /// <summary>
     /// Extracts data from html, using CSS selector
     /// </summary>
     public class Extractor : IExtractor<HtmlPayload>
     {
+        /// <summary>
+        /// Logger for this class
+        /// </summary>
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Gets or sets CSS selector string
         /// </summary>
@@ -29,6 +35,8 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
         /// <returns>Returns list of HtmlPayload</returns>
         public IEnumerable<HtmlPayload> ExtractFrom(IPayload payload)
         {
+            logger.Debug($"Start extracting from payload");
+            logger.Trace($"Payload : {payload}");
             var html = payload as HtmlPayload;
             var elements = new List<HtmlPayload>();
             foreach (var element in html.Content[this.CssSelector])
@@ -36,6 +44,7 @@ namespace CodeFrom.WebScraper.Worker.SimpleHtml.Implementations
                 elements.Add(new HtmlPayload() { Content = new CQ(element) });
             }
 
+            logger.Debug($"Extracted from payload, got {elements.Count} elements");
             return elements;
         }
     }
